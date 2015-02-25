@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="leaflet/leaflet.css" />
+	<script src="leaflet/leaflet.js"></script>
+	<script src="../dist/leaflet.conditionalmarkers.js"></script>
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
+
+	<script>
+		
+
+		var map = L.map('map').setView([51.505, -0.09], 13);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
+
+
+		var conditionalLayer1 = L.conditionalMarkers([], {maxMarkers: 2}).addTo(map);
+		
+		L.circle([51.508, -0.11], 500, {
+			color: 'green',
+			fillColor: '#0f3',
+			fillOpacity: 0.5
+		}).addTo(conditionalLayer1);
+		L.circle([51.49207, -0.08034], 300, {
+			color: 'green',
+			fillColor: '#0f3',
+			fillOpacity: 0.5
+		}).addTo(conditionalLayer1);
+		L.circle([51.51013, -0.0642], 100, {
+			color: 'green',
+			fillColor: '#0f3',
+			fillOpacity: 0.5
+		}).addTo(conditionalLayer1);
+		var conditionalLayer2 = L.conditionalMarkers([
+		L.circle([51.52466, -0.08463], 800, {
+			color: 'black',
+			fillColor: '#333',
+			fillOpacity: 0.5
+		}), L.circle([51.50832, -0.08446], 100, {
+			color: 'black',
+			fillColor: '#333',
+			fillOpacity: 0.5
+		}), L.circle([51.49667, -0.10111], 80, {
+			color: 'black',
+			fillColor: '#333',
+			fillOpacity: 0.5
+		}), L.circle([51.5174, -0.10283], 50, {
+			color: 'black',
+			fillColor: '#333',
+			fillOpacity: 0.5
+		})], {maxMarkers: 3}).addTo(map);
+
+		var layerControl = L.control.layers([], {"Green" :conditionalLayer1, "Black":conditionalLayer2});
+		layerControl.addTo(map);
+		var popup = L.popup();
+
+	</script>
+</body>
+</html>

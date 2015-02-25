@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="leaflet/leaflet.css" />
+	<script src="leaflet/leaflet.js"></script>
+	<script src="support/JQuery-1.11.1.min.js"></script>
+	<script src="../dist/leaflet.conditionalmarkers.js"></script>
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
+
+	<script>
+		
+
+		var map = L.map('map', {worldCopyJump:false, maxBounds: [[45, -180],[-45, 180]], minZoom:3, noWarp:true}).setView([0, 0], 8);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
+
+
+		var conditionalLayer = L.conditionalMarkers([], {maxMarkers: 500});
+		var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
+		var url = "support/listOfCircles.json"
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function(data) {
+                for(var marker = 0;marker< data.length; marker++) {
+                    conditionalLayer.addLayer(
+                    	L.circle([data[marker].posz*90-45, 
+                    		data[marker].posy*360-180], 
+                    		data[marker].radius*100000, 
+                    		{
+    							color: 'green', 
+    							fill:null
+							}
+						)
+					);
+                }
+                conditionalLayer.addTo(map);
+            }
+        });
+	</script>
+</body>
+</html>
