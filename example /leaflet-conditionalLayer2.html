@@ -27,7 +27,7 @@
 		}).addTo(map);
 
 
-		var conditionalLayer = L.conditionalMarkers([], {maxMarkers: 500});
+		var conditionalLayer = L.conditionalMarkers([], {maxMarkers: 300});
 		var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
 		var url = "support/listOfCircles.json"
         $.ajax({
@@ -38,7 +38,7 @@
                     conditionalLayer.addLayer(
                     	L.circle([data[marker].posz*90-45, 
                     		data[marker].posy*360-180], 
-                    		data[marker].radius*5e5, 
+                    		data[marker].radius*10e5, 
                     		{
     							color: 'green', 
     							fill:null
