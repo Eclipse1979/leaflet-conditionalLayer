@@ -2,7 +2,7 @@
 
 A layer that does not show any more than a certain amount of markers visible in the viewport. To be used when encountering performance probleme due to an important quantity of markers in the map.
 
-Check out the [Demo](http://eclipse1979.github.io/Leaflet.ConditionalLayer/example/leaflet-conditionalLayer2.html). Note that on this page, there are more than 40 000 circles.
+Check out the [Demo](http://eclipse1979.github.io/Leaflet.ConditionalLayer/example/leaflet-conditionalLayer2.html). Note that on this page there are more than 40 000 circles.
 
 ## Using Leaflet-ConditionalLayer :
 
