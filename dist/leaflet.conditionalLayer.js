@@ -2,7 +2,16 @@
 // Inspired on the work of Ishmael Smyrnow
 
   L.ConditionalMarkers = L.FeatureGroup.extend({
-  	initialize: function (layers) {
+  	
+  	options: {
+  		maxMarkers: 500
+  		DisplaySort: function(a, b) {
+				return b - a;
+			}
+  	},
+  	initialize: function (layers, options) {
+  		L.setOptions(this, options);
+  		
 		this._layers = {};
 
 		var i, len;
@@ -12,9 +21,7 @@
 				this.addLayer(layers[i]);
 			}
 		}
-		this.options= {
-      		maxMarkers: 500
-      	}
+		
       this._markers= [];
     	this.onMap= false;
 	},
@@ -52,8 +59,7 @@
       var self = this;
       this.onMap = true;
       if (map != null) {
-        map.on("moveend", function (e) { self._update.call(self, e); });
-        map.on("zoomend", function (e) { self._update.call(self, e); });
+        map.on("moveend", this._update, this );
       }
 
       // Add layer to the map
@@ -68,6 +74,7 @@
     onRemove: function() {
       this._removeMarkers();
       this.onMap = false;
+      map.off("moveend", this._update);
     },
 
     _update: function (e) {
@@ -81,11 +88,13 @@
 
     _addMarkers: function () {
       // Add select markers to layer; skips existing ones automatically
-      var i, marker;
+      var i, marker,
+      options = this.options;
 
       var markers = this._getMarkersInViewport(this._map);
+      markers.sort(options.DisplaySort);
 
-      for (i = 0; i < markers.length && i < this.options.maxMarkers; i++) {
+      for (i = 0; i < markers.length && i < options.maxMarkers; i++) {
         marker = markers[i];
         this._layer.addLayer(marker);
       }
@@ -125,10 +134,10 @@
   });
 
   L.conditionalMarkers = function (markers, options) {
-    var layer = new L.ConditionalMarkers();
+    var layer = new L.ConditionalMarkers(null, options),
+    	i;
     for(i in markers) {
-      layer._markers = markers;
+      layer._markers[i] = markers[i];
     }
-    layer.setMaxMarkers(options.maxMarkers);
     return layer;
   };
