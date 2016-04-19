@@ -6,7 +6,7 @@
   	options: {
   		maxMarkers: 500,
   		DisplaySort: function(a, b) {
-				return b - a;
+				return b._leaflet_id - a._leaflet_id;
 			}
   	},
   	initialize: function (layers, options) {
