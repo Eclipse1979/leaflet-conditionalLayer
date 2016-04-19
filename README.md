@@ -28,4 +28,5 @@ Methods are the same as those of [FeatureGroup](http://leafletjs.com/reference.h
 
 ## Options :
 * `maxMarkers:` maximal number of markers
+* `DisplaySort:` sort function which is passed each layer.  default sort is by each layers leaflet_ID, but the function can use any value stored in each layer to sort them. Default function: `function(a, b) { return b._leaflet_id - a._leaflet_id; }`
 
