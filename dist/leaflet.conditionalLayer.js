@@ -4,7 +4,7 @@
   L.ConditionalMarkers = L.FeatureGroup.extend({
   	
   	options: {
-  		maxMarkers: 500
+  		maxMarkers: 500,
   		DisplaySort: function(a, b) {
 				return b - a;
 			}
