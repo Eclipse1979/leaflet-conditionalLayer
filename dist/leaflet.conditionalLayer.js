@@ -71,7 +71,7 @@
       L.FeatureGroup.prototype.onAdd.call(this, map);
     },
 
-    onRemove: function() {
+    onRemove: function(map) {
       this._removeMarkers();
       this.onMap = false;
       map.off("moveend", this._update);
